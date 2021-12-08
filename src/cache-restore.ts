@@ -38,10 +38,11 @@ export const restoreCache = async (
 
   const primaryKey = `node-cache-${platform}-${packageManager}-${fileHash}`;
   core.debug(`primary key is ${primaryKey}`);
+  const restoreKeys = [`node-cache-${platform}-${packageManager}-`];
 
   core.saveState(State.CachePrimaryKey, primaryKey);
 
-  const cacheKey = await cache.restoreCache([cachePath], primaryKey);
+  const cacheKey = await cache.restoreCache([cachePath], primaryKey, restoreKeys);
   core.setOutput('cache-hit', Boolean(cacheKey));
 
   if (!cacheKey) {
